@@ -1,0 +1,22 @@
+{
+  "name": "react-sample",
+  "version": "0.0.1",
+  "description": "React.js sample app",
+  "main": "gulpfile.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Andrey Ermakov <dreef3@gmail.com>",
+  "license": "ISC",
+  "dependencies": {
+    "babel-runtime": "^5.1.10",
+    "bootstrap": "^3.3.4",
+    "eventemitter3": "^0.1.6",
+    "immutable": "^3.7.2",
+    "lodash": "^3.7.0",
+    "page": "^1.6.2",
+    "react": "^0.13.1",
+    "superagent": "^1.2.0",
+    "zepto": "0.0.4"
+  }
+}

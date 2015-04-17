@@ -1,0 +1,21 @@
+{
+  "name": "react-sample",
+  "version": "0.0.1",
+  "authors": [
+    "Andrey Ermakov <dreef3@gmail.com>"
+  ],
+  "main": "gulpfile.js",
+  "keywords": [
+    "react",
+    "immutable",
+    "flux"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
