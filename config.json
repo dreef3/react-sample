@@ -1,0 +1,7 @@
+{
+    "src": "src",
+    "test": "spec",
+    "entry": "src/app/index.js",
+    "testEntry": "spec/index.js",
+    "dest": "build"
+}
