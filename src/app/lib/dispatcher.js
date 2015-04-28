@@ -1,3 +1,5 @@
+'use strict';
+
 import csp from 'js-csp';
 
 export default class Dispatcher {
@@ -14,8 +16,22 @@ export default class Dispatcher {
         csp.operations.mult.untap(this.broadcast, channel);
     }
 
-    dispatch(payload) {
-        csp.putAsync(this.eventChannel, payload);
+    dispatchAsync(payload) {
+        return new Promise((resolve, reject) => {
+            csp.putAsync(this.eventChannel, payload, () => resolve(this));
+        });
+    }
+
+    *dispatch(payload) {
+        yield csp.put(this.eventChannel, payload);
+    }
+
+    destroy() {
+        csp.operations.mult.untapAll(this.broadcast);
+        this.eventChannel.close();
+        if (Dispatcher._instance === this) {
+            Dispatcher._instance = undefined;
+        }
     }
 
     static instance() {

@@ -1,25 +1,64 @@
-'use babel';
+'use strict';
 
-import Store from 'lib/store';
 import csp from 'js-csp';
+import Dispatcher from 'lib/dispatcher';
+import Store from 'lib/store';
 
-describe('Store', () => {
-    let store = new Store();
+describe('Store', function () {
+    let payload = {payload: 'test', source: 'test'};
+    class TestStore extends Store {
+        accepts(payload) {
+            return super.accepts(payload) && payload.payload !== 'done';
+        }
 
-    xit('should contain an income channel', () => {
-        expect(store.in).to.be.defined();
-    });
+        *handlePayload(p) {
+            console.log('[store-' + this.name + ']', 'handlePayload', p);
+            expect(p).to.equal(payload);
+            yield* this.dispatcher.dispatch(this.createPayload('done'));
+        }
+    }
 
-    it('should run a channels test', () => {
-        let fetchCh = csp.go(function*(result) {
-            yield csp.timeout(1000);
-            return result;
+    describe('API', function () {
+        let stores;
+        let dispatcher = Dispatcher.instance();
+        let result;
+
+        beforeEach(() => {
+            stores = [new TestStore(), new TestStore()];
+            result = csp.chan();
         });
 
-        csp.go(function*() {
-            let result =
-                yield csp.take(fetchCh);
-            console.log(result);
+        afterEach(() => {
+            result.close();
         });
-    });
+
+        describe('register', function () {
+            it('should handle a payload from the dispatcher', function (done) {
+                this.timeout(0);
+
+                let counter = 0;
+                csp.go(function*() {
+                    let payload = yield result;
+                    while (payload !== csp.CLOSED) {
+                        console.log('[result]', payload);
+                        if (payload.payload === 'done') {
+                            counter++;
+                            console.log('[result]', counter);
+                            if (counter === stores.length) {
+                                dispatcher.destroy();
+                                done();
+                            }
+                        }
+                        payload = yield result;
+                    }
+                });
+
+                stores.forEach((store) => {
+                    store.register(dispatcher);
+                });
+                dispatcher.register(result);
+                dispatcher.dispatchAsync(payload);
+            });
+        });
+    })
 });
