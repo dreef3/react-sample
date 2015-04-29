@@ -1,7 +1,7 @@
 'use strict';
 
 import csp from 'js-csp';
-import Dispatcher from 'lib/dispatcher';
+import Dispatcher from 'lib/flux/dispatcher';
 
 describe('Dispatcher', () => {
     describe('method', () => {

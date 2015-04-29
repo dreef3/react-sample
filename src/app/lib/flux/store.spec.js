@@ -1,8 +1,8 @@
 'use strict';
 
 import csp from 'js-csp';
-import Dispatcher from 'lib/dispatcher';
-import Store from 'lib/store';
+import Dispatcher from 'lib/flux/dispatcher';
+import Store from 'lib/flux/store';
 
 describe('Store', function () {
     let payload = {payload: 'test', source: 'test'};

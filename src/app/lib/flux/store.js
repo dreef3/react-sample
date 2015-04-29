@@ -4,7 +4,7 @@ import csp from 'js-csp';
 import agent from 'superagent-promise';
 
 import guid from 'lib/util/guid';
-import Dispatcher from 'lib/dispatcher';
+import Dispatcher from 'lib/flux/dispatcher';
 
 export default class Store {
     constructor(name) {
@@ -12,6 +12,9 @@ export default class Store {
         this.update = this.update.bind(this);
         this.handlePayload = this.handlePayload.bind(this);
         this.in = csp.chan();
+    }
+
+    state() {
     }
 
     register(dispatcher) {
@@ -42,10 +45,11 @@ export default class Store {
         return payload && payload.source !== this.name;
     }
 
-    createPayload(payload) {
+    createPayload(payload, action) {
         return {
             source: this.name,
-            payload: payload
+            action,
+            payload
         };
     }
 
