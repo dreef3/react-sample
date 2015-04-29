@@ -16,7 +16,8 @@ module.exports = {
     resolve: {
         root: [
             path.resolve(__dirname, './node_modules'),
-            path.resolve(__dirname, './src/app')
+            path.resolve(__dirname, './src/app'),
+            path.resolve(__dirname, './spec/')
         ],
         extensions: ['', '.js', '.jsx']
     },

@@ -22,7 +22,7 @@ extend(webpackConfig, {
 module.exports = function(config) {
     config.set({
         browsers: ['PhantomJS'],
-        frameworks: ['mocha', 'chai', 'sinon'],
+        frameworks: ['mocha', 'chai-as-promised', 'chai', 'sinon'],
         files: [
             {pattern: 'src/**/*.js', included: false},
             {pattern: 'src/**/*.jsx', included: false},

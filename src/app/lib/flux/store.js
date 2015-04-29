@@ -33,7 +33,6 @@ export default class Store {
     *update() {
         let payload = yield this.in;
         while (payload !== csp.CLOSED) {
-            console.log('[store-' + this.name + ']', 'update', payload);
             if (this.accepts(payload)) {
                 csp.go(this.handlePayload, [payload]).close();
             }
