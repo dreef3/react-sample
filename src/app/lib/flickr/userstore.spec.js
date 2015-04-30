@@ -5,7 +5,7 @@ import Dispatcher from 'lib/flux/dispatcher';
 import {ACTIONS} from 'lib/flickr/constants';
 import UserStore from 'lib/flickr/userstore';
 
-describe.only('UserStore', function() {
+describe.only('UserStore', function () {
     describe('API', () => {
         let store, dispatcher = Dispatcher.instance();
 
@@ -18,12 +18,12 @@ describe.only('UserStore', function() {
             store.destroy();
         });
 
-        describe('fetchUser', function() {
-            it('should fetch the user info', function(done) {
+        describe('fetchUser', function () {
+            it('should fetch the user info', function (done) {
                 this.timeout(0);
                 let listener = csp.chan();
                 dispatcher.register(listener);
-                csp.go(function* () {
+                csp.go(function * () {
                     let payload = yield listener;
                     expect(payload).to.have.property('payload', 'oliviabee');
                     expect(payload).to.have.property('action', ACTIONS.USERNAME_CHANGE);

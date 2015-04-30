@@ -1,0 +1,6 @@
+{
+	"preset": "yandex",
+	"excludeFiles": ["node_modules/**", "bower_components/**"],
+	"fileExtensions": [".js", ".jsx"],
+	"esnext": true
+}

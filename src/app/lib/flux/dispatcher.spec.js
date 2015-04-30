@@ -52,7 +52,7 @@ describe('Dispatcher', () => {
 
                 listeners.forEach(startListening);
 
-                csp.go(function*() {
+                csp.go(function *() {
                     yield* dispatcher.dispatch(payload);
                 });
             });
@@ -63,7 +63,7 @@ describe('Dispatcher', () => {
                 let chan = csp.chan();
 
                 dispatcher.register(chan);
-                csp.go(function*() {
+                csp.go(function *() {
                     let p = yield chan;
                     expect(p).to.equal(payload);
                     done();
@@ -86,7 +86,7 @@ describe('Dispatcher', () => {
 
                     listeners.forEach(startListening);
 
-                    csp.go(function*() {
+                    csp.go(function *() {
                         yield* dispatcher.dispatch(payload);
                     });
                 });

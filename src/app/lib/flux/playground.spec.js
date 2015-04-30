@@ -21,7 +21,7 @@ describe('Dispatcher', function () {
         this.timeout(0);
 
         let counter = 0;
-        csp.go(function*() {
+        csp.go(function *() {
             let payload = yield result;
             while (payload !== csp.CLOSED) {
                 console.log('[result]', payload);
@@ -39,12 +39,12 @@ describe('Dispatcher', function () {
         });
 
         listeners.forEach((chan, idx) => {
-            csp.go(function*() {
+            csp.go(function *() {
                 let payload = yield chan;
                 while (payload !== csp.CLOSED) {
                     console.log('[listener' + idx + ']', payload);
                     if (payload.source !== idx) {
-                        csp.go(function* () {
+                        csp.go(function * () {
                             yield csp.put(source, {name: 'done', source: idx});
                         }).close();
                     }

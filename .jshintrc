@@ -1,0 +1,20 @@
+{
+    "esnext": true,
+    "bitwise": true,
+    "curly": true,
+    "eqeqeq": true,
+    "forin": true,
+    "latedef": true,
+    "maxdepth": 3,
+    "maxparams": 5,
+    "noarg": true,
+    "nocomma": true,
+    "nonew": true,
+    "undef": true,
+    "unused": true,
+    "eqnull": true,
+    "browser": true,
+    "devel": true,
+    "jquery": true,
+    "globalstrict": true
+}
