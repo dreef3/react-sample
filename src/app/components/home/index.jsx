@@ -21,10 +21,6 @@ class HomePage extends React.Component {
         csp.go(this.update);
     }
 
-    *update() {
-        let payload =
-    }
-
     handleUsernameChange(e) {
         let username = e.target.value;
         dispatcher.dispatchAsync({payload: username, action: ACTIONS.USERNAME_CHANGE, source: 'HomePage'});
