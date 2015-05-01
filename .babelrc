@@ -1,4 +1,9 @@
 {
     "stage": 0,
-    "optional": ["runtime"]
+    "optional": [
+        "runtime",
+        "utility.inlineEnvironmentVariables",
+        "utility.deadCodeElimination",
+        "utility.inlineExpressions"
+    ]
 }

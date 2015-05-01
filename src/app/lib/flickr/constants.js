@@ -10,4 +10,4 @@ export default {
         USERNAME_CHANGE: 'user:name:change',
         USERSTORE_CHANGE: 'user:store:change'
     }
-}
+};

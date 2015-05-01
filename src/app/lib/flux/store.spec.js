@@ -38,7 +38,7 @@ describe('Store', function () {
         });
 
         afterEach(() => {
-            stores.forEach((store) => store.destroy());
+            stores.forEach((store) => store.unregister());
             result.close();
         });
 
@@ -54,5 +54,5 @@ describe('Store', function () {
                 dispatcher.dispatchAsync(payload);
             });
         });
-    })
+    });
 });

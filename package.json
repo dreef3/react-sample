@@ -6,7 +6,7 @@
   "repository": "https://github.com/dreef3/react-sample.git",
   "scripts": {
     "build": "webpack",
-    "serve": "webpack-dev-server --devtool eval-source-map --progress --colors --hot --content-base build",
+    "serve": "webpack-dev-server --progress --colors --hot --content-base build",
     "test": "karma start"
   },
   "author": "Andrey Ermakov <dreef3@gmail.com>",
@@ -35,6 +35,8 @@
     "css-loader": "^0.10.1",
     "file-loader": "^0.8.1",
     "gulp-fixmyjs": "^1.0.2",
+    "gulp-jscs": "^1.6.0",
+    "imports-loader": "^0.6.3",
     "karma": "^0.12.31",
     "karma-chai": "^0.1.0",
     "karma-chai-as-promised": "^0.1.2",

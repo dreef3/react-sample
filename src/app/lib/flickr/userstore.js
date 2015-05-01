@@ -1,14 +1,12 @@
-'use strict';
-
 import agent from 'superagent-promise';
 
 import {API, ACTIONS} from 'lib/flickr/constants';
+import Constants from 'lib/flux/constants';
 import Store from 'lib/flux/store';
 
 export default class UserStore extends Store {
     constructor() {
-        super();
-
+        super(...arguments);
         this.reset();
     }
 
@@ -31,12 +29,14 @@ export default class UserStore extends Store {
 
     fetchUser(username) {
         return agent('GET', API.URL)
-            .query({api_key: API.KEY, method: 'flickr.people.findByUsername', username, format: 'json', nojsoncallback: 1})
+            .query({api_key: API.KEY, method: 'flickr.people.findByUsername',
+                username, format: 'json', nojsoncallback: 1})
             .end().then((res) => {
                 res = res.body.user;
                 let id = res.nsid;
                 return agent('GET', API.URL)
-                    .query({api_key: API.KEY, method: 'flickr.people.getInfo', user_id: id, format: 'json', nojsoncallback: 1})
+                    .query({api_key: API.KEY, method: 'flickr.people.getInfo',
+                        user_id: id, format: 'json', nojsoncallback: 1})
                     .end();
             }).then((res) => {
                 res = res.body.person;
@@ -51,11 +51,16 @@ export default class UserStore extends Store {
                     }
                 };
 
-                this.dispatcher.dispatchAsync(this.createPayload(this.state(), ACTIONS.USERSTORE_CHANGE));
+                this.dispatcher.dispatchAsync(this.createPayload(this.state(),
+                    Constants.ACTIONS.STORE_CHANGE));
             })
             .catch((err) => {
                 console.log(err);
             });
+    }
+
+    get actions() {
+        return [ACTIONS.USERNAME_CHANGE];
     }
 
     *handlePayload(payload) {
@@ -64,12 +69,5 @@ export default class UserStore extends Store {
                 this.fetchUser(payload.payload);
                 break;
         }
-    }
-
-    static instance() {
-        if (!UserStore._instance) {
-            UserStore._instance = new UserStore();
-        }
-        return UserStore._instance;
     }
 }

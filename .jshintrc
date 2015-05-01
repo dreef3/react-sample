@@ -16,5 +16,5 @@
     "browser": true,
     "devel": true,
     "jquery": true,
-    "globalstrict": true
+    "strict": false
 }

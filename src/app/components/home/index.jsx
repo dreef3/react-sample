@@ -1,30 +1,30 @@
-'use strict';
-
+import $ from 'jquery';
 import React from 'react';
 
-import csp from 'js-csp';
-import Dispatcher from 'lib/flux/dispatcher';
+import {inject} from 'lib/di/context';
 import {ACTIONS} from 'lib/flickr/constants';
 import UserStore from 'lib/flickr/userstore';
+import BaseComponent from 'components/basecomponent';
+import UserInfo from 'components/home/userinfo';
 
-const userStore = UserStore.instance();
-const dispatcher = Dispatcher.instance();
-
-class HomePage extends React.Component {
+class HomePage extends BaseComponent {
     constructor() {
         super();
         this.handleUsernameChange = this.handleUsernameChange.bind(this);
-        this.state = userStore.state();
-
-        this.in = csp.chan();
-        dispatcher.register(this.in);
-        csp.go(this.update);
+        this.state = this.store.state();
     }
 
     handleUsernameChange(e) {
-        let username = e.target.value;
-        dispatcher.dispatchAsync({payload: username, action: ACTIONS.USERNAME_CHANGE, source: 'HomePage'});
+        let username = $('#input-username').val();
+        this.dispatcher.dispatchAsync({
+            payload: username,
+            action: ACTIONS.USERNAME_CHANGE,
+            source: 'HomePage'
+        });
     }
+
+    @inject(UserStore)
+    get store() {}
 
     render() {
         return (
@@ -34,17 +34,25 @@ class HomePage extends React.Component {
                 </div>
                 <div className="col-sm-6">
                     <div className="input-group">
-                        <input type="text" className="form-control" placeholder="Flickr username"/>
+                        <input type="text"
+                            id="input-username"
+                            className="form-control"
+                            placeholder="Flickr username"/>
                         <span className="input-group-btn">
-                            <button className="btn btn-default" type="button" onClick={this.handleUsernameChange}>
+                            <button
+                                className="btn btn-default"
+                                type="button"
+                                onClick={this.handleUsernameChange}>
                                 Search
                             </button>
                         </span>
                     </div>
                 </div>
-                <div className="col-sm-6"></div>
+                <div className="col-sm-6">
+                    <UserInfo {...this.state} />
+                </div>
             </div>
-        )
+        );
     }
 }
 

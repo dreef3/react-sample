@@ -6,7 +6,11 @@ import guid from 'lib/util/guid';
 import Dispatcher from 'lib/flux/dispatcher';
 
 export default class ActionListener {
-    constructor(name) {
+    constructor() {
+        ActionListener.__initialize.apply(this, arguments);
+    }
+
+    static __initialize(name) {
         this.name = name || guid();
         this.update = this.update.bind(this);
         this.handlePayload = this.handlePayload.bind(this);
@@ -19,7 +23,7 @@ export default class ActionListener {
         csp.go(this.update);
     }
 
-    destroy() {
+    unregister() {
         if (this.dispatcher) {
             this.dispatcher.unregister(this.in);
         }

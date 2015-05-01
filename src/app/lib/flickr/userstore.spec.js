@@ -5,7 +5,7 @@ import Dispatcher from 'lib/flux/dispatcher';
 import {ACTIONS} from 'lib/flickr/constants';
 import UserStore from 'lib/flickr/userstore';
 
-describe.only('UserStore', function () {
+describe('UserStore', function () {
     describe('API', () => {
         let store, dispatcher = Dispatcher.instance();
 
@@ -37,5 +37,5 @@ describe.only('UserStore', function () {
                 dispatcher.dispatchAsync({action: ACTIONS.USERNAME_CHANGE, payload: 'oliviabee'});
             });
         });
-    })
+    });
 });
