@@ -1,5 +1,3 @@
-export default {
-    ACTIONS: {
-        STORE_CHANGE: 'store:change'
-    }
-}
+export const ACTIONS = {
+    STORE_CHANGE: 'store:change'
+};

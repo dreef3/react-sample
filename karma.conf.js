@@ -21,17 +21,17 @@ extend(webpackConfig, {
 
 module.exports = function(config) {
     config.set({
-        browsers: ['PhantomJS'],
-        frameworks: ['mocha', 'chai-as-promised', 'chai', 'sinon'],
+        //browsers: ['PhantomJS'],
+        frameworks: ['mocha', 'chai-as-promised', 'chai', 'sinon', 'sinon-chai'],
         files: [
             {pattern: 'src/**/*.js', included: false},
             {pattern: 'src/**/*.jsx', included: false},
             'spec/index.js'
         ],
         preprocessors: {
-            'spec/index.js': ['webpack', 'sourcemap'] //preprocess with webpack and our sourcemap loader
+            'spec/index.js': ['webpack', 'sourcemap']
         },
-        reporters: ['dots'], //report results in this format
+        reporters: ['dots'],
         webpack: webpackConfig,
         webpackMiddleware: {
             noInfo: true

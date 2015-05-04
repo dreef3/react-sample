@@ -17,17 +17,17 @@ describe('Dispatcher', function () {
         });
     });
 
-    xit('should broadcast the payload to all listeners', function (done) {
+    it('should broadcast the payload to all listeners', function (done) {
         this.timeout(0);
 
         let counter = 0;
         csp.go(function *() {
             let payload = yield result;
             while (payload !== csp.CLOSED) {
-                console.log('[result]', payload);
+                // console.log('[result]', payload);
                 if (payload.name === 'done') {
                     counter++;
-                    console.log('[result]', counter);
+                    // console.log('[result]', counter);
                     if (counter === listeners.length) {
                         source.close();
                         csp.operations.mult.untapAll(broadcast);
@@ -42,7 +42,7 @@ describe('Dispatcher', function () {
             csp.go(function *() {
                 let payload = yield chan;
                 while (payload !== csp.CLOSED) {
-                    console.log('[listener' + idx + ']', payload);
+                    // console.log('[listener' + idx + ']', payload);
                     if (payload.source !== idx) {
                         csp.go(function * () {
                             yield csp.put(source, {name: 'done', source: idx});
@@ -54,6 +54,6 @@ describe('Dispatcher', function () {
             });
         });
 
-        csp.putAsync(source, {name: 'test', source: -1}, () => console.log('putAsync callback'));
+        csp.putAsync(source, {name: 'test', source: -1});
     });
 });

@@ -2,6 +2,7 @@
 
 import csp from 'js-csp';
 import Dispatcher from 'lib/flux/dispatcher';
+import * as STORE from 'lib/flux/constants';
 import {ACTIONS} from 'lib/flickr/constants';
 import UserStore from 'lib/flickr/userstore';
 
@@ -30,7 +31,7 @@ describe('UserStore', function () {
                     payload = yield listener;
                     expect(payload).to.have.property('payload');
                     expect(payload.payload).to.contain.all.keys('id', 'username', 'name', 'photos', 'location');
-                    expect(payload).to.have.property('action', ACTIONS.USERSTORE_CHANGE);
+                    expect(payload).to.have.property('action', STORE.ACTIONS.STORE_CHANGE);
                     done();
                 });
 

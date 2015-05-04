@@ -14,20 +14,32 @@ export default class ActionListener {
         this.name = name || guid();
         this.update = this.update.bind(this);
         this.handlePayload = this.handlePayload.bind(this);
+        this.destroy = this.destroy.bind(this);
+        this.register = this.register.bind(this);
         this.in = csp.chan();
     }
 
     register(dispatcher) {
-        this.dispatcher = dispatcher;
+        if (!this.in) {
+            throw Error('Listener not initialized yet: ' + this.name);
+        }
+        if (dispatcher) {
+            this.dispatcher = dispatcher;
+        }
         this.dispatcher.register(this.in);
         csp.go(this.update);
     }
 
-    unregister() {
+    destroy() {
+        if (!this.in) {
+            throw Error('Listener is already destroyed');
+            console.trace();
+        }
         if (this.dispatcher) {
             this.dispatcher.unregister(this.in);
         }
         this.in.close();
+        this.in = undefined;
     }
 
     *update() {

@@ -3,7 +3,6 @@ import React from 'react';
 
 import {inject} from 'lib/di/context';
 import {ACTIONS} from 'lib/flickr/constants';
-import UserStore from 'lib/flickr/userstore';
 import BaseComponent from 'components/basecomponent';
 import UserInfo from 'components/home/userinfo';
 
@@ -11,7 +10,7 @@ class HomePage extends BaseComponent {
     constructor() {
         super();
         this.handleUsernameChange = this.handleUsernameChange.bind(this);
-        this.state = this.store.state();
+        this.state = this.store.state;
     }
 
     handleUsernameChange(e) {
@@ -23,7 +22,7 @@ class HomePage extends BaseComponent {
         });
     }
 
-    @inject(UserStore)
+    @inject('UserStore')
     get store() {}
 
     render() {

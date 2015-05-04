@@ -1,9 +1,11 @@
-import agent from 'superagent-promise';
+import {agent} from 'lib/flickr/agent';
 
+import {register} from 'lib/di/context';
 import {API, ACTIONS} from 'lib/flickr/constants';
-import Constants from 'lib/flux/constants';
+import * as STORE from 'lib/flux/constants';
 import Store from 'lib/flux/store';
 
+@register()
 export default class UserStore extends Store {
     constructor() {
         super(...arguments);
@@ -23,22 +25,17 @@ export default class UserStore extends Store {
         };
     }
 
-    state() {
+    get state() {
         return this._state;
     }
 
     fetchUser(username) {
-        return agent('GET', API.URL)
-            .query({api_key: API.KEY, method: 'flickr.people.findByUsername',
-                username, format: 'json', nojsoncallback: 1})
-            .end().then((res) => {
+        return agent.findByUsername(username).then((res) => {
                 res = res.body.user;
-                let id = res.nsid;
-                return agent('GET', API.URL)
-                    .query({api_key: API.KEY, method: 'flickr.people.getInfo',
-                        user_id: id, format: 'json', nojsoncallback: 1})
-                    .end();
+                let user_id = res.nsid;
+                return agent.getUserInfo({user_id});
             }).then((res) => {
+                console.log(res);
                 res = res.body.person;
                 this._state = {
                     id: res.id,
@@ -52,15 +49,12 @@ export default class UserStore extends Store {
                 };
 
                 this.dispatcher.dispatchAsync(this.createPayload(this.state(),
-                    Constants.ACTIONS.STORE_CHANGE));
+                    STORE.ACTIONS.STORE_CHANGE));
             })
             .catch((err) => {
+                //this.dispatcher.dispatchAsync(this.createPayload(err, STORE.ACTIONS.ERROR));
                 console.log(err);
             });
-    }
-
-    get actions() {
-        return [ACTIONS.USERNAME_CHANGE];
     }
 
     *handlePayload(payload) {

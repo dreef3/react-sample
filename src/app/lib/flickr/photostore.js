@@ -1,5 +1,5 @@
+import {ACTIONS} from 'lib/flickr/constants';
 import Store from 'lib/flux/store';
-
 
 export default class PhotoStore extends Store {
     constructor() {
@@ -7,11 +7,23 @@ export default class PhotoStore extends Store {
         this.reset();
     }
 
-    state() {
+    reset() {
+        this._state = {
+            
+        };
+    }
+
+    get state() {
         return this._state;
     }
 
-    static instance() {
-        if (!PhotoStore._instance)
+
+
+    *handlePayload(payload) {
+        switch(payload.action) {
+            case ACTIONS.USERNAME_CHANGE:
+                this.fetchPhotos();
+                break;
+        }
     }
 }

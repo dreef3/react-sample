@@ -32,7 +32,7 @@ class BaseComponent extends __BaseComponent {
     }
 
     *handlePayload(payload) {
-        this.setState(this.store.state());
+        this.setState(this.store.state);
     }
 }
 
